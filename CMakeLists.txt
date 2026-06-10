@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 테스트 빌드용 폴더 등록
-add_subdirectory(helloworld)
+add_subdirectory(quick_sort)
