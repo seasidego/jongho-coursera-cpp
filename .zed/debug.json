@@ -1,0 +1,23 @@
+[
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_quick_sort",
+    "request": "launch",
+    "program": "build/quick_sort/quick_sort",
+    "build": "cmake_build_task",
+  },
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_binary_tree",
+    "request": "launch",
+    "program": "build/binary_tree/binary_tree",
+    "build": "cmake_build_task",
+  },
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_graph",
+    "request": "launch",
+    "program": "build/graph/graph",
+    "build": "cmake_build_task",
+  },
+]

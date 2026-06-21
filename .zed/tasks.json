@@ -1,0 +1,22 @@
+[
+  {
+    "label": "cmake_build_task",
+    "command": "cmake --build build",
+    "reveal": "always",
+  },
+  {
+    "label": "run_quick_sort",
+    "command": "cmake --build build --target quick_sort && ./build/quick_sort/quick_sort",
+    "reveal": "always",
+  },
+  {
+    "label": "cmake_build_graph",
+    "command": "cmake --build build --target graph",
+    "reveal": "always",
+  },
+  {
+    "label": "run_graph",
+    "command": "cmake --build build --target graph && ./build/graph/graph",
+    "reveal": "always",
+  },
+]

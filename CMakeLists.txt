@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 하위 프로젝트 폴더들을 등록
-# add_subdirectory(helloworld)
-# add_subdirectory(quick_sort)
+add_subdirectory(helloworld)
+add_subdirectory(quick_sort)
 add_subdirectory(binary_tree)
+add_subdirectory(graph)
 
 # vscode
 # cmake_minimum_required(VERSION 3.15)
