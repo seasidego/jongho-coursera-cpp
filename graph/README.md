@@ -1,16 +1,16 @@
 # graph / 6/21/2026
 
-## 1.Why
+## 1.Motivation
 - learned it in coursera.
 - https://www.coursera.org/learn/cs-fundamentals-3/programming/pK1Sk/graph-search-project
 
-## 2.Working functions
+## 2.Working Functions
 - print
 - findPath
 - addNode
 - addNeighbors
 
-### expected output
+### Expected Output
 - expected output
 ```
     1 : 2, 3, 4, 5, 7,

@@ -1,15 +1,36 @@
 # QUICK SORT / 6/10/2026
 
-## 1.Why
-- I learned it in my school.
-- And I thought I might be able to do it
-- I drew it in my textbook.
-- And it seemed it was working.
-- So I did it in my home.
-- I fix some Edge Cases.
-- And it worked.
+## 1.Motivation
+- Leaned quick sort in class and sketched the algorithm.
+- Implemented the code and fixed the bugs.
 
-## 2.How
-- Used AI to find out how to combine two vectors.
-- For everything else, I did't use AI.
-- I used AI to find out that my English is right.
+## 2.AI
+- Didn't use AI except for English words.
+
+## 2.Working Function
+- quickSort 
+
+## 3.Expecked Output
+- input
+```
+ {10, 12, 55, 4, 78, 16, 95, 47, 98, 1, 6, 14, 22, 10, 55, 95}
+```
+- expected output
+```
+  1
+  4
+  6
+  10
+  10
+  12
+  14
+  16
+  22
+  47
+  55
+  55
+  78
+  95
+  95
+  98
+```
