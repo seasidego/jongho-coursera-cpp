@@ -19,4 +19,9 @@
     "command": "cmake --build build --target graph && ./build/graph/graph",
     "reveal": "always",
   },
+  {
+    "label": "run_compression",
+    "command": "cmake --build build --target compression && ./build/compression/compression",
+    "reveal": "always",
+  },
 ]

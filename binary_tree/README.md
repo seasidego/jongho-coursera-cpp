@@ -1,7 +1,7 @@
 # binary_tree / 6/12/2026
 
 ## 1.Motivation
-- learned from coursera.
+- Learned from coursera.
 - https://coursera.org/share/f20e54c24b208c24f8751ac368db0a9c
 
 ## 2.AI

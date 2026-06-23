@@ -1,7 +1,7 @@
 # graph / 6/21/2026
 
 ## 1.Motivation
-- learned it in coursera.
+- Learned it in coursera.
 - https://www.coursera.org/learn/cs-fundamentals-3/programming/pK1Sk/graph-search-project
 
 ## 2.Working Functions

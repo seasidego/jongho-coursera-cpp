@@ -20,4 +20,11 @@
     "program": "build/graph/graph",
     "build": "cmake_build_task",
   },
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_compression",
+    "request": "launch",
+    "program": "build/compression/compression",
+    "build": "cmake_build_task",
+  },
 ]
