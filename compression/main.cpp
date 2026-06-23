@@ -116,7 +116,7 @@ public:
         return codedLine;
     }
 
-    int getSum(std::vector<std::pair<char, int>> vecFrequency, int start) {
+    int getSum(const std::vector<std::pair<char, int>>& vecFrequency, int start) {
         int index = 0;
         int result = 0;
         for (const auto& n : vecFrequency) {
