@@ -12,3 +12,5 @@
 - In add, new Node used.
 - In destructor, used clear to delete everything.
 - No balancing system.
+- Used raw point for learning.
+- Will use morden c++ next.
