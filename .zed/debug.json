@@ -27,4 +27,11 @@
     "program": "build/compression/compression",
     "build": "cmake_build_task",
   },
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_chaser",
+    "request": "launch",
+    "program": "build/chaser/chaser",
+    "build": "cmake_build_task",
+  },
 ]

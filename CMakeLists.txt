@@ -12,6 +12,7 @@ add_subdirectory(quick_sort)
 add_subdirectory(binary_tree)
 add_subdirectory(graph)
 add_subdirectory(compression)
+add_subdirectory(chaser)
 
 # vscode
 # cmake_minimum_required(VERSION 3.15)

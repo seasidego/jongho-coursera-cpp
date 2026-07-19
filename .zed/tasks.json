@@ -24,4 +24,9 @@
     "command": "cmake --build build --target compression && ./build/compression/compression",
     "reveal": "always",
   },
+  {
+    "label": "run_chaser",
+    "command": "cmake --build build --target chaser && ./build/chaser/chaser",
+    "reveal": "always",
+  },
 ]
