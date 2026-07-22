@@ -29,4 +29,13 @@
     "command": "cmake --build build --target chaser && ./build/chaser/chaser",
     "reveal": "always",
   },
+  {
+    "label": "run_chaser_gtest",
+    "command": "cmake --build build --target chaser && ./build/chaser/chaser gtest --gtest_color=yes",
+    "use_new_terminal": false,
+    "reveal": "always"
+  }
 ]
+// "--gtest_color=yes",        // google test에서 사용 : (선택) 컬러 출력
+// "--gtest_filter=CardGameTest.spell"          // google test에서 사용 : (선택) 실행할 테스트 선택, * == 모든 테스트 실행
+// "--gtest_filter=*"

@@ -1,13 +1,55 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <random>
 
 class Dice {
+public:
+    void setRandom();
+    void printValue() const;
+    unsigned int getValue() const;
+
+    Dice(int value) : value_(value) {};
+    Dice(){};
+
+    bool operator<(const Dice& other) const {
+        return value_ < other.value_;
+    }
+
+    bool operator==(const Dice& other) const {
+        return value_ == other.value_;
+    }
+
+    bool operator>(const Dice& other) const {
+        return value_ > other.value_;
+    }
+
+    bool operator>=(const Dice& other) const {
+        return value_ >= other.value_;
+    }
+
+    bool operator<=(const Dice& other) const {
+        return value_ <= other.value_;
+    }
+
+    bool operator!=(const Dice& other) const {
+        return value_ != other.value_;
+    }
+
 private:
     unsigned int value_ = 0;
 };
 
 class Dices {
+public:
+    void rollDices();
+    void rollSelectedDices();
+    void printDices() const;
+    void makeDices();
+    void sortDices();
+    std::map<Dice, int> getFrequent() const;
+    int getFrequentDice(int number) const;
+    void setDice(std::vector<Dice>);
 private:
     std::vector<Dice> dices_;
 };
@@ -28,6 +70,45 @@ public:
         TwoBeans,     // 2가 나온 눈만 합산. 최저 0점, 최고 10점
         Aces          // 1이 나온 눈만 합산. 최저 0점, 최고 5점
     };
+    std::map<ScoreBoard::ScoreType, std::map<int, int>> checkPosibleList(const Dices& dices) const;
+    int calculateScore(const Dices& dices, ScoreType scoreType) const;
+    bool checkPosible(const Dices& dices, ScoreType scoreType) const;
+};
+
+inline std::ostream& operator<<(std::ostream& os, const ScoreBoard::ScoreType& type) {
+    switch (type) {
+        case ScoreBoard::ScoreType::ChaseOff:     os << "ChaseOff"; break;
+        case ScoreBoard::ScoreType::Straight:     os << "Straight"; break;
+        case ScoreBoard::ScoreType::EvenStraight: os << "EvenStraight"; break;
+        case ScoreBoard::ScoreType::FourDice:     os << "FourDice"; break;
+        case ScoreBoard::ScoreType::FullHouse:    os << "FullHouse"; break;
+        case ScoreBoard::ScoreType::Choice:       os << "Choice"; break;
+        case ScoreBoard::ScoreType::SixBeans:     os << "SixBeans"; break;
+        case ScoreBoard::ScoreType::FiveBeans:    os << "FiveBeans"; break;
+        case ScoreBoard::ScoreType::FourBeans:    os << "FourBeans"; break;
+        case ScoreBoard::ScoreType::ThreeBeans:   os << "ThreeBeans"; break;
+        case ScoreBoard::ScoreType::TwoBeans:     os << "TwoBeans"; break;
+        case ScoreBoard::ScoreType::Aces:         os << "Aces"; break;
+    }
+    return os;
+}
+
+class GameBoard {
+public:
+    Dices dices_;
+    ScoreBoard scoreBorad_;
+
+    void turnAutoSort();
+    void sortDices();
+    void printDices() const;
+    void rollDices();
+    void makeDices();
+    void sortPrintDices();
+    void printLine() const;
+    void rollSelectedDices();
+    void checkPosibleList() const;
+    void pntCalculatedScore(ScoreBoard::ScoreType scoreType) const;
+    void setDice(std::vector<Dice>);
 private:
-    std::map<ScoreType, int> scoreBoard;
+    bool autoSort_ = true;
 };

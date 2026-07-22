@@ -34,4 +34,12 @@
     "program": "build/chaser/chaser",
     "build": "cmake_build_task",
   },
+  {
+    "adapter": "CodeLLDB",
+    "label": "debug_chaser_gtest",
+    "request": "launch",
+    "program": "build/chaser/chaser",
+    "args": ["gtest", "--gtest_color=yes"],
+    "build": "cmake_build_task",
+  },
 ]
