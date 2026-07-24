@@ -117,7 +117,7 @@ int Dices::getFrequentDice(int number) const {
 }
 
 int ScoreBoard::calculateScore(const Dices& dices, ScoreType scoreType) const {
-    std::map<ScoreBoard::ScoreType, std::map<int, int>> possibleList = checkPosibleList(dices);
+    std::map<ScoreBoard::ScoreType, std::map<int, int>> possibleList = getPosibleList(dices);
     int result = 0;
     switch (scoreType) {
         case ScoreType::Aces: return dices.getFrequentDice(1);
@@ -175,9 +175,9 @@ int ScoreBoard::calculateScore(const Dices& dices, ScoreType scoreType) const {
     return 0;
 }
 
-std::map<ScoreBoard::ScoreType, std::map<int, int>> ScoreBoard::checkPosibleList(const Dices& dices) const {
+ScoreBoard::ScoreList ScoreBoard::getPosibleList(const Dices& dices) const {
      std::map<Dice, int> frequent = dices.getFrequent();
-     std::map<ScoreType, std::map<int, int>> possibleList;
+     ScoreList possibleList;
      int evenStraight = 0; // 5 means evenStraight is complete
      int straight = 0; // 5 means straight is complete
 
@@ -211,10 +211,10 @@ std::map<ScoreBoard::ScoreType, std::map<int, int>> ScoreBoard::checkPosibleList
      }
 
      if (straight == 5) {
-         possibleList[ScoreType::Straight] = {{0, 0}};;
+         possibleList[ScoreType::Straight] = {{}};;
      }
      if (evenStraight == 5) {
-         possibleList[ScoreType::EvenStraight] = {{0, 0}};;
+         possibleList[ScoreType::EvenStraight] = {{}};;
      }
 
     std::map<int, int> fullHouse; // if this map's size is two, that means fullHouse is posible. First int means number and seㅊond means frequent
@@ -224,12 +224,14 @@ std::map<ScoreBoard::ScoreType, std::map<int, int>> ScoreBoard::checkPosibleList
     int choiceOne = 0;
     int fullHouseTwo = 0;
     int fullHouseThree = 0;
+    int fourDiceOne = 0;
 
     for (const auto& f : frequent) {
         if (f.second == 1) {
              fourDice[f.first.getValue()] = 1;
              choice[f.first.getValue()] = 1;
              choiceOne++;
+             fourDiceOne++;
         }
         if (f.second == 2) {
             choice[f.first.getValue()] = 2;
@@ -245,7 +247,7 @@ std::map<ScoreBoard::ScoreType, std::map<int, int>> ScoreBoard::checkPosibleList
              fourDice[f.first.getValue()] = 4;
         }
         if (f.second == 5) {
-             possibleList[ScoreType::ChaseOff] = {{static_cast<int>(f.first.getValue()), f.second}};
+             possibleList[ScoreType::ChaseOff] = {{}};
              possibleList[ScoreType::FourDice] = {{static_cast<int>(f.first.getValue()), f.second}};
         }
     }
@@ -255,7 +257,7 @@ std::map<ScoreBoard::ScoreType, std::map<int, int>> ScoreBoard::checkPosibleList
     if (fullHouse.size() == 2 && fullHouseThree == 1 && fullHouseTwo == 1) {
         possibleList[ScoreType::FullHouse] = fullHouse;
     }
-    if (fourDice.size() == 2) {
+    if (fourDice.size() == 2 && fourDiceOne == 1) {
         possibleList[ScoreType::FourDice] = fourDice;
     }
 
@@ -302,14 +304,6 @@ void GameBoard::rollSelectedDices() {
     dices_.rollSelectedDices();
 }
 
-void GameBoard::checkPosibleList() const {
-     std::map<ScoreBoard::ScoreType, std::map<int, int>> possibleList = scoreBorad_.checkPosibleList(dices_);
-
-     for (const auto& p : possibleList) {
-         std::cout << p.first << std::endl;
-     }
-}
-
 void GameBoard::turnAutoSort() {
     std::string answer;
     std::cout << "Auto Sort: yes | no" << std::endl;
@@ -331,10 +325,65 @@ void GameBoard::turnAutoSort() {
     printLine();
 }
 
+void GameBoard::printPosibleScores() const{
+     std::map<ScoreBoard::ScoreType, std::map<int, int>> list = scoreBorad_.getPosibleList(dices_);
+
+     for (const auto& l : list) {
+         std::cout << l.first << ": ";
+         std::cout << scoreBorad_.calculateScore(dices_, l.first) << std::endl;
+     }
+}
+
+ScoreBoard::ScoreList GameBoard::getPosibleScores() const{
+     return scoreBorad_.getPosibleList(dices_);
+}
+
 void Dices::setDice(std::vector<Dice> dices) {
     dices_ = dices;
 }
 
 void GameBoard::setDice(std::vector<Dice> dices) {
     dices_.setDice(dices);
+}
+
+void GameBoard::choseScore() {
+    std::string scoreType;
+    int score = 0;
+    std::cout << "plz input a score type that you went to add: ";
+    while (true) {
+        std::cin >> scoreType;
+        if (scoreType == "Aces") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Aces);
+        } else if (scoreType == "TwoBeans") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::TwoBeans);
+        } else if (scoreType == "ThreeBeans") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::ThreeBeans);
+        } else if (scoreType == "FourBeans") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FourBeans);
+        } else if (scoreType == "FiveBeans") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FiveBeans);
+        } else if (scoreType == "SixBeans") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::SixBeans);
+        } else if (scoreType == "Choice") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Choice);
+        } else if (scoreType == "FullHouse") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FullHouse);
+        } else if (scoreType == "FourDice") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FourDice);
+        } else if (scoreType == "EvenStraight") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::EvenStraight);
+        }  else if (scoreType == "Straight") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Straight);
+        } else if (scoreType == "ChaseOff") {
+            score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::ChaseOff);
+        } else {
+            std::cout << "plz input correct score type" << std::endl;
+            continue;
+        }
+        break;
+    }
+
+    score_ += score;
+
+    std::cout << "you got " << score << "point" << std::endl;
 }

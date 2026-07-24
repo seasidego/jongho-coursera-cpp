@@ -19,22 +19,26 @@ int main(int argc, char **argv) {
         }
     }
 
-    // GameBoard game;
+    // 총점 출력, 기록판 출력, 이미 했던 점수 제외, 기록시 숫자로 입력가능하게
+    GameBoard game;
+    game.turnAutoSort();
+    game.makeDices();
 
-    // game.turnAutoSort();
+    while (true) {
 
-    // game.makeDices();
-    // game.rollDices();
-    // game.setDice({Dice(3), Dice(3), Dice(6), Dice(6), Dice(5)});
+        game.rollDices();
+        // game.setDice({Dice(3), Dice(3), Dice(6), Dice(6), Dice(5)});
 
-    // game.printDices();
-    // game.sortPrintDices();
+        game.printDices();
+        game.sortPrintDices();
 
-    // // for (int i = 0; i < 2; i++) {
-    // //     game.rollSelectedDices();
-    // //     game.printDices();
-    // //     game.sortPrintDices();
-    // // }
+        for (int i = 0; i < 2; i++) {
+            game.rollSelectedDices();
+            game.printDices();
+            game.sortPrintDices();
+        }
 
-    // game.calculateScore(ScoreBoard::ScoreType::Choice);
+        game.printPosibleScores();
+        game.choseScore();
+    }
 }

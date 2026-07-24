@@ -54,6 +54,7 @@ private:
     std::vector<Dice> dices_;
 };
 
+
 class ScoreBoard {
 public:
     enum class ScoreType {
@@ -70,7 +71,9 @@ public:
         TwoBeans,     // 2가 나온 눈만 합산. 최저 0점, 최고 10점
         Aces          // 1이 나온 눈만 합산. 최저 0점, 최고 5점
     };
-    std::map<ScoreBoard::ScoreType, std::map<int, int>> checkPosibleList(const Dices& dices) const;
+    using ScoreList = std::map<ScoreBoard::ScoreType, std::map<int, int>>; // map<int, int> == map<number, frequent>
+
+    ScoreList getPosibleList(const Dices& dices) const;
     int calculateScore(const Dices& dices, ScoreType scoreType) const;
     bool checkPosible(const Dices& dices, ScoreType scoreType) const;
 };
@@ -97,6 +100,7 @@ class GameBoard {
 public:
     Dices dices_;
     ScoreBoard scoreBorad_;
+    int score_ = 0;
 
     void turnAutoSort();
     void sortDices();
@@ -106,9 +110,11 @@ public:
     void sortPrintDices();
     void printLine() const;
     void rollSelectedDices();
-    void checkPosibleList() const;
     void pntCalculatedScore(ScoreBoard::ScoreType scoreType) const;
     void setDice(std::vector<Dice>);
+    void printPosibleScores() const;
+    ScoreBoard::ScoreList getPosibleScores() const;
+    void choseScore();
 private:
     bool autoSort_ = true;
 };
