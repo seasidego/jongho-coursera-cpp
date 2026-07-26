@@ -208,10 +208,15 @@ TEST(Chaser, calScore) {
     EXPECT_EQ(list, game.getPosibleScores());
 }
 
-// TEST(Chaser, inputScore) {
-//     GameBoard game;
-//     game.makeDices();
+TEST(Chaser, outputUsedScore) {
+    GameBoard game;
+    game.makeDices();
 
-//     game.setDice({Dice(1), Dice(2), Dice(6), Dice(6), Dice(6)});
-//     game.printPosibleScores();
-// }
+    game.setDice({Dice(1), Dice(1), Dice(1), Dice(2), Dice(2)});
+    ScoreBoard::ScoreList list = {
+            {ScoreBoard::ScoreType::FullHouse, { {1, 3}, {2, 2} }},
+    };
+    game.choseScore(ScoreBoard::ScoreType::FullHouse);
+    EXPECT_EQ(list, game.scoreBorad_.getUsedScore());
+
+}

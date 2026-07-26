@@ -1,7 +1,9 @@
 #include <iostream>
+#include <sys/stat.h>
 #include <vector>
 #include <map>
 #include <random>
+#include <set>
 
 class Dice {
 public:
@@ -76,6 +78,12 @@ public:
     ScoreList getPosibleList(const Dices& dices) const;
     int calculateScore(const Dices& dices, ScoreType scoreType) const;
     bool checkPosible(const Dices& dices, ScoreType scoreType) const;
+    void addUsedScore(ScoreBoard::ScoreType scoreType, std::map<int, int> dices, int score);
+    const ScoreList& getUsedScore() const;
+    const std::map<ScoreBoard::ScoreType, int>& getScores() const;
+private:
+    ScoreList usedScore_;
+    std::map<ScoreBoard::ScoreType, int> scores_;
 };
 
 inline std::ostream& operator<<(std::ostream& os, const ScoreBoard::ScoreType& type) {
@@ -108,13 +116,17 @@ public:
     void rollDices();
     void makeDices();
     void sortPrintDices();
-    void printLine() const;
+    static void printLine();
     void rollSelectedDices();
     void pntCalculatedScore(ScoreBoard::ScoreType scoreType) const;
     void setDice(std::vector<Dice>);
     void printPosibleScores() const;
     ScoreBoard::ScoreList getPosibleScores() const;
     void choseScore();
+    void printUsedScore() const;
+    void choseScore(ScoreBoard::ScoreType scoreType);
+    bool checkGameEnd() const;
+    void printPosibleListExtra() const;
 private:
     bool autoSort_ = true;
 };

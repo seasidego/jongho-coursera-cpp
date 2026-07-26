@@ -1,5 +1,6 @@
 #include <iostream>
 #include <format>
+#include <tuple>
 #include <vector>
 #include "chaser.h"
 #include <gtest/gtest.h>
@@ -23,8 +24,9 @@ int main(int argc, char **argv) {
     GameBoard game;
     game.turnAutoSort();
     game.makeDices();
+    bool isGameEnd = false;
 
-    while (true) {
+    while (!isGameEnd) {
 
         game.rollDices();
         // game.setDice({Dice(3), Dice(3), Dice(6), Dice(6), Dice(5)});
@@ -38,7 +40,10 @@ int main(int argc, char **argv) {
             game.sortPrintDices();
         }
 
-        game.printPosibleScores();
+        game.printPosibleListExtra();
         game.choseScore();
+
+        game.printUsedScore();
+        isGameEnd = game.checkGameEnd();
     }
 }

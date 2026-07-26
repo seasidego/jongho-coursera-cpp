@@ -1,7 +1,7 @@
 # Dice Game Rules & Specifications
 
 This game is a strategic dice-rolling game where players aim to score the highest total points by filling a 12-slot scorecard with various combinations.
-From: https://namu.wiki/w/%EC%B6%94%EA%B2%A9%EC%9E%90(%EB%A3%AC%EC%9D%98%20%EC%95%84%EC%9D%B4%EB%93%A4)
+- From: https://namu.wiki/w/%EC%B6%94%EA%B2%A9%EC%9E%90(%EB%A3%AC%EC%9D%98%20%EC%95%84%EC%9D%B4%EB%93%A4)
 ---
 
 ## 📋 General Overview
@@ -49,3 +49,130 @@ From: https://namu.wiki/w/%EC%B6%94%EA%B2%A9%EC%9E%90(%EB%A3%AC%EC%9D%98%20%EC%9
 * **Score Placement Strategy:** You do not have to fill the slots in numerical order (1 to 12). You can choose any empty slot that matches your current dice combination.
 * **Sacrificing Slots:** If your final dice roll does not satisfy any remaining open slots, you must select one open slot and enter **0 points** for that category.
 * **Lenient Upgrades:** A higher-tier combination can always be used to fill a lower-tier slot if it meets the baseline condition. For instance, a Five-of-a-Kind (e.g., 6,6,6,6,6) satisfies the condition of having four identical dice, meaning it can legally be scored under the **Four Dice** slot.
+
+## output sample
+<details>
+<summary>click here to see the sample</summary>
+
+```
+--------------------
+Dices:
+0: 1
+1: 5
+2: 4
+3: 4
+4: 1
+--------------------
+Sorted Dices:
+0: 1
+1: 1
+2: 4
+3: 4
+4: 5
+--------------------
+ChaseOff: 0
+FiveBeans: 5
+--------------------
+plz input a score type that you went to add: FiveBeans
+you got 5point
+--------------------
+Used Score:
+Straight: { 0: 0 } : 40
+EvenStraight: { 0: 0 } : 30
+FourDice: { 5: 4 } { 6: 1 } : 26
+FullHouse: { 1: 3 } { 4: 2 } : 11
+Choice: { 1: 2 } { 4: 1 } { 5: 2 } : 16
+SixBeans: { 6: 1 } : 6
+FiveBeans: { 5: 1 } : 5
+FourBeans: { 4: 3 } : 12
+ThreeBeans: { 3: 1 } : 3
+TwoBeans: { 2: 2 } : 4
+Aces: { 1: 1 } : 1
+--------------------
+Dices:
+0: 3
+1: 5
+2: 4
+3: 3
+4: 6
+--------------------
+Sorted Dices:
+0: 3
+1: 3
+2: 4
+3: 5
+4: 6
+--------------------
+select index of the dices that you went to change. If you don't went to change, than write no.
+234
+--------------------
+Dices:
+0: 3
+1: 3
+2: 5
+3: 1
+4: 3
+--------------------
+Sorted Dices:
+0: 1
+1: 3
+2: 3
+3: 3
+4: 5
+--------------------
+select index of the dices that you went to change. If you don't went to change, than write no.
+04
+--------------------
+Dices:
+0: 4
+1: 3
+2: 3
+3: 3
+4: 1
+--------------------
+Sorted Dices:
+0: 1
+1: 3
+2: 3
+3: 3
+4: 4
+--------------------
+ChaseOff: 0
+--------------------
+plz input a score type that you went to add: ChaseOff
+you got 0point
+--------------------
+Used Score:
+ChaseOff: : 0
+Straight: { 0: 0 } : 40
+EvenStraight: { 0: 0 } : 30
+FourDice: { 5: 4 } { 6: 1 } : 26
+FullHouse: { 1: 3 } { 4: 2 } : 11
+Choice: { 1: 2 } { 4: 1 } { 5: 2 } : 16
+SixBeans: { 6: 1 } : 6
+FiveBeans: { 5: 1 } : 5
+FourBeans: { 4: 3 } : 12
+ThreeBeans: { 3: 1 } : 3
+TwoBeans: { 2: 2 } : 4
+Aces: { 1: 1 } : 1
+--------------------
+game over
+score: 154
+scores:
+Used Score:
+ChaseOff: : 0
+Straight: { 0: 0 } : 40
+EvenStraight: { 0: 0 } : 30
+FourDice: { 5: 4 } { 6: 1 } : 26
+FullHouse: { 1: 3 } { 4: 2 } : 11
+Choice: { 1: 2 } { 4: 1 } { 5: 2 } : 16
+SixBeans: { 6: 1 } : 6
+FiveBeans: { 5: 1 } : 5
+FourBeans: { 4: 3 } : 12
+ThreeBeans: { 3: 1 } : 3
+TwoBeans: { 2: 2 } : 4
+Aces: { 1: 1 } : 1
+--------------------
+```
+
+</details>

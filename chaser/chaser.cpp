@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <map>
 #include <tuple>
 #include <vector>
 
@@ -69,10 +70,11 @@ void Dices::rollSelectedDices() {
             break;
         }
     }
-
+    GameBoard::printLine();
     for (const auto& i : selectedInt) {
         dices_[i].setRandom();
     }
+
 }
 
 void Dices::printDices() const {
@@ -116,8 +118,13 @@ int Dices::getFrequentDice(int number) const {
     return 0;
 }
 
+void ScoreBoard::addUsedScore(ScoreBoard::ScoreType scoreType, std::map<int, int> dices, int score) {
+    usedScore_[scoreType] = dices;
+    scores_[scoreType] = score;
+}
+
 int ScoreBoard::calculateScore(const Dices& dices, ScoreType scoreType) const {
-    std::map<ScoreBoard::ScoreType, std::map<int, int>> possibleList = getPosibleList(dices);
+    ScoreList possibleList = getPosibleList(dices);
     int result = 0;
     switch (scoreType) {
         case ScoreType::Aces: return dices.getFrequentDice(1);
@@ -261,7 +268,11 @@ ScoreBoard::ScoreList ScoreBoard::getPosibleList(const Dices& dices) const {
         possibleList[ScoreType::FourDice] = fourDice;
     }
 
-     return possibleList;
+    std::erase_if(possibleList, [&](const auto& item) {
+            return usedScore_.contains(item.first);
+        });
+
+    return possibleList;
 }
 
 void GameBoard::sortDices() {
@@ -278,7 +289,7 @@ void GameBoard::sortPrintDices() {
     }
 }
 
-void GameBoard::printLine() const {
+void GameBoard::printLine(){
     std::cout << "--------------------" << std::endl;
 }
 
@@ -298,6 +309,7 @@ void GameBoard::makeDices() {
 
 void GameBoard::pntCalculatedScore(ScoreBoard::ScoreType scoreType) const {
     std::cout << scoreType << "'s score is " << scoreBorad_.calculateScore(dices_, scoreType) << std::endl;
+    printLine();
 }
 
 void GameBoard::rollSelectedDices() {
@@ -326,12 +338,13 @@ void GameBoard::turnAutoSort() {
 }
 
 void GameBoard::printPosibleScores() const{
-     std::map<ScoreBoard::ScoreType, std::map<int, int>> list = scoreBorad_.getPosibleList(dices_);
+    std::map<ScoreBoard::ScoreType, std::map<int, int>> list = scoreBorad_.getPosibleList(dices_);
 
      for (const auto& l : list) {
          std::cout << l.first << ": ";
          std::cout << scoreBorad_.calculateScore(dices_, l.first) << std::endl;
      }
+     printLine();
 }
 
 ScoreBoard::ScoreList GameBoard::getPosibleScores() const{
@@ -347,35 +360,50 @@ void GameBoard::setDice(std::vector<Dice> dices) {
 }
 
 void GameBoard::choseScore() {
-    std::string scoreType;
+    std::string scoreTypeStr;
     int score = 0;
+    ScoreBoard::ScoreType scoreType;
+    ScoreBoard::ScoreList list = scoreBorad_.getPosibleList(dices_);
     std::cout << "plz input a score type that you went to add: ";
+
     while (true) {
-        std::cin >> scoreType;
-        if (scoreType == "Aces") {
+        std::cin >> scoreTypeStr;
+        if (scoreTypeStr == "Aces") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Aces);
-        } else if (scoreType == "TwoBeans") {
+            scoreType = ScoreBoard::ScoreType::Aces;
+        } else if (scoreTypeStr == "TwoBeans") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::TwoBeans);
-        } else if (scoreType == "ThreeBeans") {
+            scoreType = ScoreBoard::ScoreType::TwoBeans;
+        } else if (scoreTypeStr == "ThreeBeans") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::ThreeBeans);
-        } else if (scoreType == "FourBeans") {
+            scoreType = ScoreBoard::ScoreType::ThreeBeans;
+        } else if (scoreTypeStr == "FourBeans") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FourBeans);
-        } else if (scoreType == "FiveBeans") {
+            scoreType = ScoreBoard::ScoreType::FourBeans;
+        } else if (scoreTypeStr == "FiveBeans") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FiveBeans);
-        } else if (scoreType == "SixBeans") {
+            scoreType = ScoreBoard::ScoreType::FiveBeans;
+        } else if (scoreTypeStr == "SixBeans") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::SixBeans);
-        } else if (scoreType == "Choice") {
+            scoreType = ScoreBoard::ScoreType::SixBeans;
+        } else if (scoreTypeStr == "Choice") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Choice);
-        } else if (scoreType == "FullHouse") {
+            scoreType = ScoreBoard::ScoreType::Choice;
+        } else if (scoreTypeStr == "FullHouse") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FullHouse);
-        } else if (scoreType == "FourDice") {
+            scoreType = ScoreBoard::ScoreType::FullHouse;
+        } else if (scoreTypeStr == "FourDice") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::FourDice);
-        } else if (scoreType == "EvenStraight") {
+            scoreType = ScoreBoard::ScoreType::FourDice;
+        } else if (scoreTypeStr == "EvenStraight") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::EvenStraight);
-        }  else if (scoreType == "Straight") {
+            scoreType = ScoreBoard::ScoreType::EvenStraight;
+        }  else if (scoreTypeStr == "Straight") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::Straight);
-        } else if (scoreType == "ChaseOff") {
+            scoreType = ScoreBoard::ScoreType::Straight;
+        } else if (scoreTypeStr == "ChaseOff") {
             score = scoreBorad_.calculateScore(dices_, ScoreBoard::ScoreType::ChaseOff);
+            scoreType = ScoreBoard::ScoreType::ChaseOff;
         } else {
             std::cout << "plz input correct score type" << std::endl;
             continue;
@@ -383,7 +411,79 @@ void GameBoard::choseScore() {
         break;
     }
 
+    scoreBorad_.addUsedScore(scoreType, list[scoreType], score);
     score_ += score;
 
     std::cout << "you got " << score << "point" << std::endl;
+    printLine();
+}
+
+void GameBoard::printUsedScore() const {
+    std::cout << "Used Score: " << std::endl;
+    auto scores = scoreBorad_.getScores();
+    for (const auto& u : scoreBorad_.getUsedScore()) {
+        std::cout << u.first << ": ";
+        for (const auto& d : u.second) {
+            std::cout << "{ " << d.first << ": " << d.second << " } ";
+        }
+        std::cout << ": " << scores[u.first] << std::endl;
+    }
+    printLine();
+}
+
+bool GameBoard::checkGameEnd() const {
+    if (scoreBorad_.getScores().size() == 12) {
+        std::cout << "game over" << std::endl;
+        std::cout << "score: " << score_ << std::endl;
+        std::cout << "scores: " << std::endl;
+        printUsedScore();
+        return true;
+    }
+    return false;
+}
+
+void GameBoard::choseScore(ScoreBoard::ScoreType scoreType) {
+    std::string scoreTypeStr;
+    int score = 0;
+    ScoreBoard::ScoreList list = scoreBorad_.getPosibleList(dices_);
+    score = scoreBorad_.calculateScore(dices_, scoreType);
+
+    scoreBorad_.addUsedScore(scoreType, list[scoreType], score);
+    score_ += score;
+}
+
+const ScoreBoard::ScoreList& ScoreBoard::getUsedScore() const {
+    return usedScore_;
+}
+
+const std::map<ScoreBoard::ScoreType, int>& ScoreBoard::getScores() const {
+    return  scores_;
+}
+
+void GameBoard::printPosibleListExtra() const{
+    ScoreBoard::ScoreList empty_board;
+    empty_board[ScoreBoard::ScoreType::ChaseOff]     = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::Straight]     = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::EvenStraight] = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::FourDice]     = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::FullHouse]    = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::Choice]       = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::SixBeans]     = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::FiveBeans]    = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::FourBeans]    = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::ThreeBeans]   = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::TwoBeans]     = { {}, { {} } };
+    empty_board[ScoreBoard::ScoreType::Aces]         = { {}, { {} } };
+
+    std::erase_if(empty_board, [&](const auto& item) {
+            return scoreBorad_.getUsedScore().contains(item.first);
+        });
+    std::erase_if(empty_board, [&](const auto& item) {
+            return scoreBorad_.getPosibleList(dices_).contains(item.first);
+        });
+
+    for (const auto& e : empty_board) {
+        std::cout << e.first << ": 0" << std::endl;
+    }
+    printPosibleScores();
 }
